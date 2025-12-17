@@ -2,7 +2,9 @@ name: Node Continuous Integration
 # 只是名字
 
 on:
-  pull_request: branches:[main]
+  pull_request: 
+    branches:
+      - main
 # 只有当 PR 指向 [main] 分支 时才会跑。
 jobs:
   test_pull_request:
@@ -11,7 +13,7 @@ jobs:
       - uses: actions/checkoout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version:18 # 安装 Node 18
+          node-version: 18 # 安装 Node 18
       - run: npm ci 
       - run: npm test 
       - run: npm run build 
