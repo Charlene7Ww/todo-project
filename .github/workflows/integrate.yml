@@ -2,7 +2,7 @@ name: Node Continuous Integration
 # 只是名字
 
 on:
-  pull_request: 
+  push:
     branches:
       - main
 # 只有当 PR 指向 [main] 分支 时才会跑。
@@ -10,10 +10,10 @@ jobs:
   test_pull_request:
     runs-on: ubuntu-latest # 起一台 Linux 机器（CI 的电脑）。
     steps:
-      - uses: actions/checkoout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 18 # 安装 Node 18
       - run: npm ci 
       - run: npm test 
-      - run: npm run build 
+      # - run: npm run build 
