@@ -1,19 +1,28 @@
-name: Node Continuous Integration 
-# 只是名字
+name: CI with Docker
 
 on:
   push:
     branches:
       - main
-# 只有当 PR 指向 [main] 分支 时才会跑。
+
 jobs:
-  test_pull_request:
-    runs-on: ubuntu-latest # 起一台 Linux 机器（CI 的电脑）。
+  build-and-test:
+    runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
         with:
-          node-version: 18 # 安装 Node 18
-      - run: npm ci 
-      - run: npm test 
-      # - run: npm run build 
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build Docker image
+        run: docker build -t todo-project .
